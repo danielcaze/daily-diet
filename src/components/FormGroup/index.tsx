@@ -1,21 +1,33 @@
 import { TextInputProps } from 'react-native/types'
-import { Container, Input, Label } from "./styles";
+import { Container, DateTimeButton, DateTimePickerText, Input, Label } from "./styles";
 
 type FormGroupProps = TextInputProps & {
   label?: string
-  textarea?: boolean
+  textArea?: boolean
+  datePicker?: {
+    value: string
+    onPress(): void
+  }
 }
 
-export function FormGroup({ label, textarea = false, ...props }: FormGroupProps) {
+export function FormGroup({ label, textArea = false, datePicker, ...props }: FormGroupProps) {
   return (
     <Container>
       {!!label && <Label>{label}</Label>}
-      <Input
-        textAlignVertical={textarea ? 'top' : 'center'}
-        multiline={textarea}
-        numberOfLines={textarea ? 5 : 1}
-        {...props}
-      />
+      {
+        datePicker ? (
+          <DateTimeButton onPress={datePicker.onPress} >
+            <DateTimePickerText>{datePicker.value}</DateTimePickerText>
+          </DateTimeButton>
+        ) : (
+          <Input
+            textAlignVertical={textArea ? 'top' : 'center'}
+            multiline={textArea}
+            numberOfLines={textArea ? 5 : 1}
+            {...props}
+          />
+        )
+      }
     </Container>
   )
 }
