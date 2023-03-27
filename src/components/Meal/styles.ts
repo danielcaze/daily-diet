@@ -34,7 +34,7 @@ export const Title = styled.Text`
 `
 
 type StatusBallProps = {
-  variant: 'HEALTHY' | 'JUNK'
+  variation: 'HEALTHY' | 'JUNK'
 }
 
 export const StatusBall = styled.View<StatusBallProps>`
@@ -42,5 +42,5 @@ export const StatusBall = styled.View<StatusBallProps>`
   height: 14px;
   border-radius: 999px;
 
-  background-color: ${({ theme, variant }) => variant === 'HEALTHY' ? theme.COLORS.GREEN : theme.COLORS.RED};
+  background-color: ${({ theme, variation }) => variation === 'HEALTHY' ? theme.COLORS.GREEN : theme.COLORS.RED};
 `

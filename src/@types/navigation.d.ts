@@ -1,6 +1,9 @@
 export type RoutesParamList = {
   Home: undefined
   Statistics: undefined
+  ManageMeal: {
+    isEdition?: boolean
+  } | undefined
 }
 
 declare global {

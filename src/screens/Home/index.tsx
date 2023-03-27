@@ -28,6 +28,10 @@ const DAILY_MEALS = [
 ]
 
 export function Home({ navigation }: RouteProps<'Home'>) {
+  function handleCreateNewMeal() {
+    navigation.navigate('ManageMeal');
+  }
+
   return (
     <Container>
       <HeaderContainer>
@@ -37,7 +41,7 @@ export function Home({ navigation }: RouteProps<'Home'>) {
       <Summary redirectTo={() => navigation.navigate('Statistics')} />
       <AddMealContainer>
         <AddMealTitle>Refeições</AddMealTitle>
-        <Button title='Nova refeição' icon='plus' />
+        <Button title='Nova refeição' icon='plus' onPress={handleCreateNewMeal} />
       </AddMealContainer>
       <FlatList
         data={DAILY_MEALS}

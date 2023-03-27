@@ -1,8 +1,8 @@
 import { ArrowUpRight } from "phosphor-react-native";
-import styled, { css } from "styled-components/native";
+import styled from "styled-components/native";
 
 type ContainerProps = {
-  variant: 'POSITIVE' | 'NEGATIVE'
+  variation: 'POSITIVE' | 'NEGATIVE'
 }
 
 export const Container = styled.View<ContainerProps>`
@@ -17,7 +17,7 @@ export const Container = styled.View<ContainerProps>`
   position: relative;
   border-radius: 8px;
 
-  background-color: ${({ theme, variant }) => variant === 'POSITIVE' ? theme.COLORS.LIGHT_GREEN : theme.COLORS.LIGHT_RED};
+  background-color: ${({ theme, variation }) => variation === 'POSITIVE' ? theme.COLORS.LIGHT_GREEN : theme.COLORS.LIGHT_RED};
 `
 
 export const Button = styled.TouchableOpacity`
@@ -26,7 +26,7 @@ export const Button = styled.TouchableOpacity`
   right: 8px;
 `
 
-export const Icon = styled(ArrowUpRight).attrs<ContainerProps>(({ theme, variant }) => ({
+export const Icon = styled(ArrowUpRight).attrs<ContainerProps>(({ theme, variation }) => ({
   size: 24,
-  color: variant === 'POSITIVE' ? theme.COLORS.DARK_GREEN : theme.COLORS.DARK_RED
+  color: variation === 'POSITIVE' ? theme.COLORS.DARK_GREEN : theme.COLORS.DARK_RED
 })) <ContainerProps>``

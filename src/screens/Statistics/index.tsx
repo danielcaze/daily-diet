@@ -2,7 +2,7 @@ import { Dimensions } from "react-native";
 import { Box } from "../../components/Box";
 import { Highlight } from "../../components/Highlight";
 import { RouteProps } from "../../types";
-import { Button, Container, Header, Icon, Stats, StatsTitle, Subtitle, Title, TwoBoxStats } from "./style";
+import { Button, Container, Header, Icon, Stats, StatsTitle, TwoBoxStats } from "./style";
 
 export function Statistics({ navigation }: RouteProps<'Statistics'>) {
   const variation: "POSITIVE" | "NEGATIVE" = 'POSITIVE'
@@ -27,11 +27,13 @@ export function Statistics({ navigation }: RouteProps<'Statistics'>) {
         <Box>
           <Highlight title="109" subtitle="refeições registradas" size="MD" />
         </Box>
-        <TwoBoxStats style={{
-          // Workaround for calculating 50% of the div less the gap (12px)
-          // So I had to get all the window size and reduce it by the div's padding (48px) & gap, then get 50%
-          width: (Dimensions.get('screen').width - 48 - 12) / 2
-        }}>
+        <TwoBoxStats
+          style={{
+            // Workaround for calculating 50% of the div less the gap (12px)
+            // So I had to get all the window size and reduce it by the div's padding (48px) & gap, then get 50%
+            width: (Dimensions.get('screen').width - 48 - 12) / 2
+          }}
+        >
           <Box variation="SUCCESS">
             <Highlight title="99" subtitle="refeições dentro da dieta" size="MD" />
           </Box>
