@@ -1,11 +1,19 @@
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
 import { AntDesign } from '@expo/vector-icons'
 
-export const Container = styled.TouchableOpacity`
+type ContainerProps = {
+  variation: 'PRIMARY' | 'SECONDARY'
+}
+
+export const Container = styled.TouchableOpacity<ContainerProps>`
   width: 100%;
   height: 50px;
 
-  background-color: ${({ theme }) => theme.COLORS.GRAY_600};
+  ${({ theme, variation }) => css`
+      background-color: ${variation === 'PRIMARY' ? theme.COLORS.GRAY_600 : theme.COLORS.WHITE};
+      border: 1px solid ${theme.COLORS.GRAY_600};
+  `}
+
 
   justify-content: center;
   flex-direction: row;
@@ -13,21 +21,22 @@ export const Container = styled.TouchableOpacity`
   border-radius: 6px;
 `
 
-export const Title = styled.Text`
+export const Title = styled.Text<ContainerProps>`
   font-size: ${({ theme }) => theme.FONT_SIZES.MEDIUM};
   font-family: ${({ theme }) => theme.FONT_FAMILIES.BOLD};
   line-height: 18.2px;
-  color: ${({ theme }) => theme.COLORS.WHITE};
+  color: ${({ theme, variation }) => variation === 'PRIMARY' ? theme.COLORS.WHITE : theme.COLORS.GRAY_700};
 `
 
 type IconProps = {
   icon: keyof typeof AntDesign.glyphMap
+  variation: 'PRIMARY' | 'SECONDARY'
 }
 
-export const Icon = styled(AntDesign).attrs<IconProps>(({ icon, theme }) => ({
+export const Icon = styled(AntDesign).attrs<IconProps>(({ icon, theme, variation }) => ({
   name: icon,
   size: 18,
-  color: theme.COLORS.WHITE
+  color: variation === 'PRIMARY' ? theme.COLORS.WHITE : theme.COLORS.GRAY_700,
 }))`
   margin-right: 12px;
 `

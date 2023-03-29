@@ -10,7 +10,7 @@ import RNDateTimePicker, { DateTimePickerEvent } from '@react-native-community/d
 import { SafeAreaView } from 'react-native-safe-area-context';
 import IsInDietFeedbackImage from '../../../assets/InDietFeedback.png'
 import IsOutDietFeedbackImage from '../../../assets/OutDietFeedback.png'
-import { RouteProps } from '../../types';
+import { NewMealDTO, RouteProps } from '../../types';
 
 export function ManageMeal({ navigation }: RouteProps<'ManageMeal'>) {
 
@@ -44,7 +44,7 @@ export function ManageMeal({ navigation }: RouteProps<'ManageMeal'>) {
   }
 
   async function handleCreateNewMeal() {
-    const NewMealDTO = {
+    const NewMealDTO: NewMealDTO = {
       name,
       description,
       date: dateText,
@@ -149,6 +149,7 @@ export function ManageMeal({ navigation }: RouteProps<'ManageMeal'>) {
               top: 55,
               left: 24,
             }}
+            onPress={() => navigation.goBack()}
           >
             <ArrowLeft size={24} />
           </TouchableOpacity>

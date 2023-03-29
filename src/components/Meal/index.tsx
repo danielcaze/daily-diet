@@ -1,17 +1,18 @@
-import { View } from "react-native";
+import { TouchableOpacityProps } from "react-native";
 import { useTheme } from "styled-components/native";
 import { Container, StatusBall, Time, Title } from "./styles";
 
-export type Meal = {
-  type: 'HEALTHY' | 'JUNK'
+export type Meal = TouchableOpacityProps & {
+  type: string
   name: string
   time: string
+  description: string
 }
 
-export function Meal({ type = 'HEALTHY', name, time }: Meal) {
+export function Meal({ type = 'HEALTHY', name, time, ...props }: Meal) {
   const { COLORS } = useTheme()
   return (
-    <Container>
+    <Container {...props}>
       <Time>
         {time}
       </Time>
