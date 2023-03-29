@@ -1,8 +1,8 @@
 import { ArrowUpRight } from "phosphor-react-native";
-import styled, { css } from "styled-components/native";
+import styled from "styled-components/native";
 
 type ContainerProps = {
-  variant: 'PRIMARY' | 'SECONDARY'
+  variation: 'POSITIVE' | 'NEGATIVE'
 }
 
 export const Container = styled.View<ContainerProps>`
@@ -17,24 +17,7 @@ export const Container = styled.View<ContainerProps>`
   position: relative;
   border-radius: 8px;
 
-  background-color: ${({ theme, variant }) => variant === 'PRIMARY' ? theme.COLORS.LIGHT_GREEN : theme.COLORS.LIGHT_RED};
-`
-
-export const Title = styled.Text`
-  ${({ theme }) => css`
-    font-family: ${theme.FONT_FAMILIES.BOLD};
-    font-size: ${theme.FONT_SIZES.XXXLARGE};
-    color: ${theme.COLORS.GRAY_700};
-  `}
-`
-
-export const Subtitle = styled.Text`
-  ${({ theme }) => css`
-    font-family: ${theme.FONT_FAMILIES.REGULAR};
-    font-size: ${theme.FONT_SIZES.MEDIUM};
-    color: ${theme.COLORS.GRAY_600};
-  `}
-  margin-top: 0;
+  background-color: ${({ theme, variation }) => variation === 'POSITIVE' ? theme.COLORS.LIGHT_GREEN : theme.COLORS.LIGHT_RED};
 `
 
 export const Button = styled.TouchableOpacity`
@@ -43,7 +26,7 @@ export const Button = styled.TouchableOpacity`
   right: 8px;
 `
 
-export const Icon = styled(ArrowUpRight).attrs<ContainerProps>(({ theme, variant }) => ({
+export const Icon = styled(ArrowUpRight).attrs<ContainerProps>(({ theme, variation }) => ({
   size: 24,
-  color: variant === 'PRIMARY' ? theme.COLORS.DARK_GREEN : theme.COLORS.DARK_RED
-}))``
+  color: variation === 'POSITIVE' ? theme.COLORS.DARK_GREEN : theme.COLORS.DARK_RED
+})) <ContainerProps>``

@@ -21,7 +21,7 @@ export function Meal({ type = 'HEALTHY', name, time }: Meal) {
       }}>
         {name}
       </Title>
-      {!!type && <StatusBall variant={type} />}
+      {!!type && <StatusBall variation={type} />}
     </Container>
   )
 }

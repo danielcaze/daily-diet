@@ -1,17 +1,18 @@
-import { Container, Icon, Subtitle, Title, Button } from "./styles";
+import { Highlight } from "../Highlight";
+import { Container, Icon, Button } from "./styles";
 
 type SummaryProps = {
-  variant?: "PRIMARY" | "SECONDARY";
+  variation?: "POSITIVE" | "NEGATIVE";
+  redirectTo(): void
 }
 
-export function Summary({ variant = 'PRIMARY' }: SummaryProps) {
+export function Summary({ variation = 'POSITIVE', redirectTo }: SummaryProps) {
   return (
-    <Container variant={variant}>
-      <Button>
-        <Icon variant={variant} />
+    <Container variation={variation}>
+      <Button onPress={redirectTo}>
+        <Icon variation={variation} />
       </Button>
-      <Title>90,86%</Title>
-      <Subtitle>das refeições dentro da dieta</Subtitle>
+      <Highlight title="90,86%" subtitle="das refeições dentro da dieta" size="LG" />
     </Container>
   )
 }
