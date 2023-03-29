@@ -71,3 +71,32 @@ export const InOutDietContent = styled.View`
   align-items: center;
   gap: 8px;
 `
+
+type FeedbackTitle = {
+  isInDiet?: boolean
+}
+
+export const FeedbackTitle = styled.Text<FeedbackTitle>`
+  ${({ theme, isInDiet }) => css`
+    font-family: ${theme.FONT_FAMILIES.BOLD};
+    font-size: ${theme.FONT_SIZES.XXLARGE};
+    color: ${isInDiet ? theme.COLORS.DARK_GREEN : theme.COLORS.DARK_RED};
+  `}
+`
+
+export const FeedbackSubtitle = styled.Text`
+  ${({ theme }) => css`
+    font-family: ${theme.FONT_FAMILIES.REGULAR};
+    font-size: ${theme.FONT_SIZES.LARGE};
+    color: ${theme.COLORS.GRAY_700};
+    text-align: center;
+  `}
+`
+
+export const FeedbackSubtitleStrong = styled.Text`
+  ${({ theme }) => css`
+    font-family: ${theme.FONT_FAMILIES.BOLD};
+    font-size: ${theme.FONT_SIZES.LARGE};
+    color: ${theme.COLORS.GRAY_700};
+  `}
+`

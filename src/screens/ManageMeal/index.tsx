@@ -1,13 +1,23 @@
-import { TouchableOpacity, Dimensions, Platform } from 'react-native'
+import { Fragment } from 'react'
+import { TouchableOpacity, Dimensions, Platform, View, Image } from 'react-native'
 import { ArrowLeft } from "phosphor-react-native";
-import { Container, Form, Header, InOutDietContainer, InOutDietContent, SectionTitle, Title, TwoInputsContainer } from "./styles";
+import { Container, FeedbackSubtitle, FeedbackSubtitleStrong, FeedbackTitle, Form, Header, InOutDietContainer, InOutDietContent, SectionTitle, Title, TwoInputsContainer } from "./styles";
 import { FormGroup } from '../../components/FormGroup';
 import { Button } from '../../components/Button';
 import { InOutDiet } from './components/InOutDiet';
 import { useState } from 'react';
 import RNDateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import IsInDietFeedbackImage from '../../../assets/InDietFeedback.png'
+import IsOutDietFeedbackImage from '../../../assets/OutDietFeedback.png'
+import { RouteProps } from '../../types';
 
-export function ManageMeal() {
+export function ManageMeal({ navigation }: RouteProps<'ManageMeal'>) {
+
+  const [showFeedbackScreen, setShowFeedbackScreen] = useState(false)
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const [isInDiet, setIsInDiet] = useState<boolean | undefined>(undefined)
   const [date, setDate] = useState(new Date())
   const [mode, setMode] = useState<'date' | 'time'>('date')
   const [show, setShow] = useState(false)
@@ -33,7 +43,91 @@ export function ManageMeal() {
     }
   }
 
-  return (
+  async function handleCreateNewMeal() {
+    const NewMealDTO = {
+      name,
+      description,
+      date: dateText,
+      time: timeText,
+      isInDiet
+    }
+    setShowFeedbackScreen(true)
+    console.log(NewMealDTO)
+  }
+
+  function goHome() {
+    navigation.popToTop()
+  }
+
+  function FeedbackScreen() {
+    const title = isInDiet ? 'Continue assim!' : 'Que pena!'
+    const subtitle = isInDiet ? [
+      {
+        text: 'Você continua',
+        type: 'regular'
+      },
+      {
+        text: 'dentro da dieta.',
+        type: 'bold'
+      },
+      {
+        text: 'Muito bem!',
+        type: 'regular'
+      }
+    ] : [
+      {
+        text: 'Você',
+        type: 'regular'
+      },
+      {
+        text: 'saiu da dieta',
+        type: 'bold'
+      },
+      {
+        text: 'dessa vez, mas continue se esforçando e não desista!',
+        type: 'regular'
+      }
+    ]
+    const imageSrc = isInDiet ? IsInDietFeedbackImage : IsOutDietFeedbackImage
+    return (
+      <SafeAreaView
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          flex: 1,
+          gap: 40
+        }}
+      >
+        <View
+          style={{
+            alignItems: 'center',
+            gap: 8
+          }}
+        >
+          <FeedbackTitle isInDiet={isInDiet}>{title}</FeedbackTitle>
+          <FeedbackSubtitle>{subtitle.map(text => text.type === 'bold' ? (
+            <>
+              <FeedbackSubtitleStrong key={text.text}>{text.text}</FeedbackSubtitleStrong>{' '}
+            </>
+          ) : (
+            <Fragment key={text.text}>
+              {text.text}{' '}
+            </Fragment>
+          ))}</FeedbackSubtitle>
+        </View>
+        <Image source={imageSrc} />
+        <Button
+          title='Ir paga a página inicial'
+          style={{
+            maxWidth: '51%'
+          }}
+          onPress={goHome}
+        />
+      </SafeAreaView>
+    )
+  }
+
+  return !showFeedbackScreen ? (
     <>
       {
         show &&
@@ -61,8 +155,17 @@ export function ManageMeal() {
           <Title>Nova refeição</Title>
         </Header>
         <Form>
-          <FormGroup label='Nome' />
-          <FormGroup label='Descrição' textArea />
+          <FormGroup
+            label='Nome'
+            onChangeText={setName}
+            value={name}
+          />
+          <FormGroup
+            label='Descrição'
+            textArea
+            onChangeText={setDescription}
+            value={description}
+          />
           <TwoInputsContainer
             style={{
               // Workaround for calculating 50% of the div less the gap (20px)
@@ -90,8 +193,8 @@ export function ManageMeal() {
                 width: (Dimensions.get('screen').width - 48 - 8) / 2
               }}
             >
-              <InOutDiet isInDiet={true} />
-              <InOutDiet isInDiet={false} />
+              <InOutDiet isInDiet={true} checked={isInDiet === true} onPress={() => setIsInDiet(true)} />
+              <InOutDiet isInDiet={false} checked={isInDiet === false} onPress={() => setIsInDiet(false)} />
             </InOutDietContent>
           </InOutDietContainer>
           <Button
@@ -100,9 +203,12 @@ export function ManageMeal() {
               // Margin auto makes the button go up when keyboard is open while not on ScrollView
               marginTop: 'auto'
             }}
+            onPress={handleCreateNewMeal}
           />
         </Form>
       </Container>
     </>
+  ) : (
+    <FeedbackScreen />
   )
 }
