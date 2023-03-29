@@ -31,6 +31,7 @@ export function Statistics({ navigation }: RouteProps<'Statistics'>) {
           style={{
             // Workaround for calculating 50% of the div less the gap (12px)
             // So I had to get all the window size and reduce it by the div's padding (48px) & gap, then get 50%
+            // Note: this is only needed when the width of the child is 100%
             width: (Dimensions.get('screen').width - 48 - 12) / 2
           }}
         >

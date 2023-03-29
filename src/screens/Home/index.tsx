@@ -10,7 +10,7 @@ import { RouteProps } from '../../types';
 
 const DAILY_MEALS = [
   {
-    date: '12.08.22',
+    date: '12/08/2022',
     meals: [
       { type: 'HEALTHY', name: 'X-Tudo', time: '20:01', description: 'Descricao da comida' },
       { type: 'HEALTHY', name: 'X-Tudo', time: '20:02', description: 'Descricao da comida' },
@@ -19,7 +19,7 @@ const DAILY_MEALS = [
     ]
   },
   {
-    date: '11.08.22',
+    date: '11/08/2022',
     meals: [
       { type: 'JUNK', name: 'X-Tudo', time: '20:05', description: 'Descricao da comida' },
       { type: 'JUNK', name: 'X-Tudo', time: '20:06', description: 'Descricao da comida' },
@@ -47,7 +47,7 @@ export function Home({ navigation }: RouteProps<'Home'>) {
         data={DAILY_MEALS}
         keyExtractor={(item) => item.date}
         renderItem={({ item }) => (
-          <DailyMeals date={item.date} meals={item.meals} />
+          <DailyMeals date={item.date.replaceAll('/', '.')} meals={item.meals} />
         )}
       />
     </Container>

@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import { TouchableOpacity, Dimensions, Platform, View, Image } from 'react-native'
 import { ArrowLeft } from "phosphor-react-native";
 import { Container, FeedbackSubtitle, FeedbackSubtitleStrong, FeedbackTitle, Form, Header, InOutDietContainer, InOutDietContent, SectionTitle, Title, TwoInputsContainer } from "./styles";
@@ -11,6 +11,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import IsInDietFeedbackImage from '../../../assets/InDietFeedback.png'
 import IsOutDietFeedbackImage from '../../../assets/OutDietFeedback.png'
 import { NewMealDTO, RouteProps } from '../../types';
+import { useRoute } from '@react-navigation/native';
+
+type Params = {
+  meal: NewMealDTO
+}
 
 export function ManageMeal({ navigation }: RouteProps<'ManageMeal'>) {
 
@@ -23,6 +28,9 @@ export function ManageMeal({ navigation }: RouteProps<'ManageMeal'>) {
   const [show, setShow] = useState(false)
   const [dateText, setDateText] = useState('')
   const [timeText, setTimeText] = useState('')
+
+  const route = useRoute()
+  const params = route.params as Params
 
   function onChangeDateTime(event: DateTimePickerEvent, selectedDate: Date | undefined) {
     const currentDate = selectedDate || date
@@ -127,6 +135,17 @@ export function ManageMeal({ navigation }: RouteProps<'ManageMeal'>) {
     )
   }
 
+  useEffect(() => {
+    if (params?.meal) {
+      setName(params.meal.name)
+      setDescription(params.meal.description)
+      setIsInDiet(params.meal.isInDiet)
+      setDateText(params.meal.date)
+      setTimeText(params.meal.time)
+      setDate(new Date(params.meal.date))
+    }
+  }, [params])
+
   return !showFeedbackScreen ? (
     <>
       {
@@ -153,7 +172,7 @@ export function ManageMeal({ navigation }: RouteProps<'ManageMeal'>) {
           >
             <ArrowLeft size={24} />
           </TouchableOpacity>
-          <Title>Nova refeição</Title>
+          <Title>{params?.meal ? 'Editar' : 'Nova'} refeição</Title>
         </Header>
         <Form>
           <FormGroup
@@ -171,6 +190,7 @@ export function ManageMeal({ navigation }: RouteProps<'ManageMeal'>) {
             style={{
               // Workaround for calculating 50% of the div less the gap (20px)
               // So I had to get all the window size and reduce it by the div's padding (48px) & gap, then get 50%
+              // Note: this is only needed when the width of the child is 100%
               width: (Dimensions.get('screen').width - 48 - 20) / 2
             }}
           >
@@ -191,6 +211,7 @@ export function ManageMeal({ navigation }: RouteProps<'ManageMeal'>) {
               style={{
                 // Workaround for calculating 50% of the div less the gap (8px)
                 // So I had to get all the window size and reduce it by the div's padding (48px) & gap, then get 50%
+                // Note: this is only needed when the width of the child is 100%
                 width: (Dimensions.get('screen').width - 48 - 8) / 2
               }}
             >
@@ -199,7 +220,7 @@ export function ManageMeal({ navigation }: RouteProps<'ManageMeal'>) {
             </InOutDietContent>
           </InOutDietContainer>
           <Button
-            title='Cadastrar refeição'
+            title={params?.meal ? 'Salvar alterações' : 'Cadastrar refeição'}
             style={{
               // Margin auto makes the button go up when keyboard is open while not on ScrollView
               marginTop: 'auto'

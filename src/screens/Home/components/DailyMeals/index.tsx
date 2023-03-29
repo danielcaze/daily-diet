@@ -25,7 +25,7 @@ export function DailyMeals({ date, meals }: DailyMealsProps) {
             time={item.time}
             onPress={() => navigation.navigate('MealInfo', {
               meal: {
-                date,
+                date: date.replaceAll('.', '/'),
                 time: item.time,
                 description: item.description,
                 name: item.name,

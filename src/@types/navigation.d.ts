@@ -4,7 +4,7 @@ export type RoutesParamList = {
   Home: undefined
   Statistics: undefined
   ManageMeal: {
-    isEdition?: boolean
+    meal?: NewMealDTO
   } | undefined
   MealInfo: {
     meal?: NewMealDTO
